@@ -8,7 +8,6 @@ var imageSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String
     },
-    like : Number
 });
  
 //Image is a model which has a schema imageSchema
