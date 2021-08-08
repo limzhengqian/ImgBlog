@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	
+	<style>
+		@import url('https://fonts.googleapis.com/css?family=Raleway:200');
+
+html, body {
+  height: 100%;
+}
+#box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  height: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  font-family: 'Raleway';
+  font-size: 2.5rem;
+}
+.gradient-border {
+  --borderWidth: 3px;
+  position: relative;
+  border-radius: var(--borderWidth);
+}
+.gradient-border:after {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  border-radius: calc(2 * var(--borderWidth));
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+
+@keyframes animatedgradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+
+		#name{
+			width: 500px;
+			margin-left: 100px;
+		}
+		#desc{
+			width: 500px;
+			margin-left: 50px;
+		}
+		body{
+			margin-left: auto;
+			margin-right: auto;
+		}
+		#h1{
+			text-align: center;
+			font-size: 100px;
+		}
+		#p1{
+			text-align: center;
+			font-size: 60px;
+		}
+		#uploadbutton{
+			background-color: red;
+  color: white;
+  padding: 1em 1.5em;
+  text-decoration: none;
+  text-transform: uppercase;
+		}
+		#uploadbutton:hover {
+  background-color: #555;
+}
+#banner{
+	background-color: #84fab0;
+}
+
+
+.container{  padding-top: 20px;
+  padding-bottom: 20px;}
+body{
+  background-color: #111845;
+}
+
+.background-img{
+height: 400px;
+  width: max-content;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 5% auto;
+  padding:20px;
+  position: relative;
+}
+
+.content h2{ font-size:19px;}
+
+.box{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  overflow-y: auto;
+  float: left;
+  background: #111845a6;
+  box-sizing: border-box;
+  box-shadow: 0 20px 50px rgb(23, 32, 90);
+  border: 2px solid #2a3cad;
+  color: white;
+  padding: 20px;
+  word-wrap: break-word;
+}
+
+
+
+.box:hover:before{
+  left:-50%;
+  transform: skewX(-5deg);
+}
+
+.box.content{
+  top:15px;
+  left:15px;
+  right:15px;
+  bottom:15px;
+  border:1px solid #f0a591;
+  padding:20px;
+  text-align:center;
+  box-shadow: 0 5px 10px rgba(9,0,0,0.5);
+  overflow-y: auto;
+  float: left;
+}
+
+.box span{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  box-sizing: border-box;
+  
+}
+
+.box span:nth-child(1)
+{
+  transform:rotate(0deg);
+}
+
+.box span:nth-child(2)
+{
+  transform:rotate(90deg);
+}
+
+.box span:nth-child(3)
+{
+  transform:rotate(180deg);
+}
+
+.box span:nth-child(4)
+{
+  transform:rotate(270deg);
+}
+
+.box span:before
+{
+  content: '';
+  position: absolute;
+  width:100%;
+  height: 2px;
+  background: #50dfdb;
+  animation: animate 4s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+  transform:scaleX(0);
+  transform-origin: left;
+  }
+  50%
+  {
+    transform:scaleX(1);
+  transform-origin: left;
+  }
+  50.1%
+  {
+    transform:scaleX(1);
+  transform-origin: right;
+    
+  }
+  
+  100%
+  {
+    transform:scaleX(0);
+  transform-origin: right;
+    
+  }
+  
+  
+} 
+img{
+	display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+#timg{
+	text-decoration: underline;
+}
+#dimg{
+  word-wrap: break-word;
+	text-decoration: underline;
+}
+#dtimg{
+	font-size: 30px;
+}
+#ddimg{
+
+}
+	</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://bootswatch.com/5/sketchy/bootstrap.min.css">
+	<title>Personal Image Blog</title>
+</head>
+
+<body>
+	<div id="banner">
+		<h1 id="h1">Personal Image Blog</h1>
+	<p  id="p1">Share your joy with the world </p>
+	</div>
+	<div>
+		Wanna share some interesting picture with others?? Press <a href="/create" id="uploadbutton">Upload</a>
+	</div>
+
+	<hr>
+
+	<div class="gradient-border" id="box">Uploaded Images</div>
+</br>
+<br>
+<br>
+	<div>
+		<% items.forEach(function(image) { %>
+		<div>
+			<div>
+				<img src="data:image/<%=image.img.contentType%>;base64,
+					<%=image.img.data.toString('base64')%>" id="pic" alt="adasImage failed to load">
+				<div>
+				</div>
+				<div class="container">
+					<div class="background-img">
+					  <div class="box">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<div class="content">
+						  <h2 id="timg">Title: </h2>
+						  <p id="dtimg"><%= image.name %></p>
+						  <br>						  
+						  <h2 id="dimg">Description: </h2>
+						  <p id="ddimg"><%= image.desc %></p>
+						</div>
+						
+					  </div>
+					</div>
+				  </div>
+				<form method="DELETE" action="/delete/<%= image._id %>?_method=DELETE">
+					<button class="btn btn-danger btn-block mt-4">Delete</button>
+				  </form>
+				<form method="GET" action="/edit/<%= image._id %>?_method=GET">
+					<button>Edit</button>
+				  </form>
+				<hr>
+			</div>
+		</div>
+		<% }) %>
+	</div>
+
+</body>
+
+</html>
