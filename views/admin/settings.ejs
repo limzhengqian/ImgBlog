@@ -1,0 +1,17 @@
+<%- include('./header.ejs') %>
+<style>
+    .container{
+        margin-top: 100px;
+        margin-left: 300px;
+    }
+</style>
+<div class="container">
+    <form action="/admin/save_settings" method="POST">
+        <div class="form-control">
+            <label>Post Limit</label>
+            <input name="post_limit" class="form-control">
+        </div>
+        <input type="submit" class="btn-primary" value="Save">
+    </form>
+</div>
+<%- include('./footer.ejs') %>

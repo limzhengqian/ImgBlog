@@ -1,0 +1,149 @@
+<%- include('./header.ejs') %>
+    <style>
+        #titletxt{
+            margin-left: 100px;
+        }
+        #contenttxt{
+            margin-left: 75px;
+        }
+        
+        #gg {
+            margin-top: 100px;
+            margin-left: 300px;
+        }
+
+        .container {
+            margin-top: 300px;
+            margin-left: 300px;
+        }
+        #table{
+            margin-top: 100px;
+            margin-left: 300px;
+        }
+    </style>
+    <div class="container-fluid">
+        <form method="POST" onsubmit="return doPost(this);" id="gg">
+            <div class="form-inline">
+                <label>Title</label>
+                <input name="title" class="form-control" placeholder="Title" id="titletxt" style="width: 30%;">
+            </div>            
+            <div class="form-inline">
+                <label>Content</label>
+                <textarea name="content" class="form-control" placeholder="Content" id="contenttxt" cols="100" rows="4"></textarea>
+            </div>
+            <br>
+            <br>
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="upldbtn">
+                Upload File
+            </button>
+            <br>
+            <br>
+            <div class="form-inline">
+                <label for="tag">Choose a tag:</label>
+                <select id="tag" name="tag">
+                  <option value="PLACE">PLACE</option>
+                  <option value="GAME">GAME</option>
+                  <option value="FOOD">FOOD</option>
+                  <option value="PEOPLE">PEOPLE</option>
+                  <option value="SPORTS">SPORTS</option>
+                  <option value="LIVE">LIVE</option>
+                  <option value="ANIMAL">ANIMAL</option>
+                  <option value="PLANTS">PLANTS</option>
+                </select>
+            </div>
+            <br>
+            <br>
+            <input type="submit" class="btn-primary" value="Post">
+        </form>        
+    </div>
+     
+    <script>
+        function doDelete(postId,image){
+            $.ajax({
+                url : "/do-delete",
+                method : "POST",
+                data:{
+                    "_id" : postId,
+                    "image" : image
+                },
+                success : function(response){
+                    if(alert(response)){
+                        window.location.reload();
+                    }
+                }
+            });
+            return false;
+        };
+        function doPost(form) {
+            var formData = { title: form.title.value, content: form.content.value, image: imagePath, date:new Date() ,tag : form.tag.value};
+            $.ajax({
+                url: "/do-post",
+                method: "POST",
+                data: formData,
+                success: function (response) {                                    
+                    formData._id=response._id;
+                    var socket = io();
+                    socket.emit("new_post",formData);     
+                    if(confirm(response.text)){                        
+                        window.location.replace("/admin/dashboard");
+                    }                 
+                }
+            });
+            return false;
+        }
+
+    </script>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+                    </button>
+
+                    <h4 class="modal-title" id="myModalLabel">
+                        Upload Image
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+                    <form method="POST" enctype="multipart/form-data" id="form-upload">
+                        <div class="form-control">
+                            <input type="file" name="file" class="form-control">
+                        </div>
+                        <input type="submit" class="btn-primary" value="Upload">
+                    </form>
+                </div>
+
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+
+    </div><!-- /.modal -->
+    <script>
+        var imagePath = "";
+        $("#form-upload").on("submit", function (e) {
+            e.preventDefault();
+            console.log("here");
+            $.ajax({
+                url: "/do-upload-image",
+                method: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (response) {
+                    imagePath = response;
+                    $("#myModal").removeClass("in");
+                    $(".modal-backdrop").remove();
+                    $('body').removeClass('modal-open');
+                    $('body').css('padding-right', '');
+                    $("#myModal").hide();
+                }
+            });
+        });
+    </script>
+    <%- include('./footer.ejs') %>

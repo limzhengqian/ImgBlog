@@ -1,0 +1,62 @@
+<%- include('./header.ejs') %>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Dashboard</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>                       
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Post Details
+                            </div>
+                            <div class="card-body">
+                                <table class="table" id="table" >
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Content</th>
+                                        <th>Image</th>
+                                        <th>Date Posted</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <% if(posts){ %>
+                                         <% posts.forEach(function(post) { %>
+                                             <tr>
+                                                 <td><%= post.title %></td>
+                                                 <td><%= post.content %></td>
+                                                 <td><img src="<%= post.image %>" style="width: 300px"></td>
+                                                 <td><%= post.date %></td>
+                                                 <td>
+                                                     <a href="/posts/edit/<%= post._id %>" class="btn-link">Edit</a>
+                                                     <button type="button" class="btn-primary" onclick="doDelete('<%= post._id %>','<%= post.image  %>');">
+                                                         Delete
+                                                     </button>
+                                                 </td>
+                                             </tr>
+                                         <% }) %>
+                                   <% } else{ %>              
+                                  <% } %>
+                                 </table>     
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <script>
+                    function doDelete(postId,image){
+                        $.ajax({
+                            url : "/do-delete",
+                            method : "POST",
+                            data:{
+                                "_id" : postId,
+                                "image" : image
+                            },
+                            success : function(response){
+                                alert(response);
+                                window.location.reload();
+                            }
+                        });
+                    };                                
+                </script>
+                <%- include('./footer.ejs') %>
