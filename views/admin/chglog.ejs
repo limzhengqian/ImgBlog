@@ -1,0 +1,35 @@
+<%- include('./header.ejs') %>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Change Log</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Change Log</li>
+                        </ol>                       
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                History
+                            </div>
+                            <div class="card-body">
+                                <table class="table" id="table" >
+                                    <tr>
+                                        <th style="width: 70%;">Change Stuff</th>
+                                        <th style="width: 30%;">Time</th>                                        
+                                    </tr>
+                                    <% if(log){ %>
+                                         <% log.forEach(function(post) { %>
+                                             <tr>
+                                                 <td><%= post.change %></td>
+                                                 <td><%= post.date %></td>                                                 
+                                             </tr>
+                                         <% }) %>
+                                   <% } else{ %>              
+                                  <% } %>
+                                 </table>     
+                            </div>
+                        </div>
+                    </div>
+                </main>               
+                <%- include('./footer.ejs') %>
